@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Posts{% endblock %}
+
+{% block body %}
+    <div>
+        <a href="{{ path('createPost') }}">New Post</a>
+    </div>
+    <div>
+        Sort by:
+        <div><a href="{{ path('posts') }}">None</a></div>
+        <div><a href="{{ path('posts', {'sort': 'author'}) }}">Author</a></div>
+        <div><a href="{{ path('posts', {'sort': 'date'}) }}">Date</a></div>
+    </div>
+    <div>
+        {% for post in posts %}
+            <div style="border: 1px solid #000; width: 250px;">
+                {% if post.image %}
+                    <img id="img" src="{{ asset('images/' ~ post.image) }}" height="250px">
+                {% endif %}
+                <div>Title: {{ post.title }}</div>
+                <div>Author: {{ post.author.email }}</div>
+                <a href="{{ path('post', {'id': post.id}) }}">More</a>
+            </div>
+        {% endfor %}
+    </div>
+    <div>
+        {{ knp_pagination_render(posts) }}
+    </div>
+{% endblock %}
